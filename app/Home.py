@@ -6,9 +6,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Loading Saved XGB model, Scaling Function and Feature order.
-xgb_model = joblib.load("xgb_model.pkl")
-scaler = joblib.load("scaler.pkl")
-feature_names = joblib.load("feature_names.pkl")
+xgb_model = joblib.load("app/xgb_model.pkl")
+scaler = joblib.load("app/scaler.pkl")
+feature_names = joblib.load("app/feature_names.pkl")
 
 
 st.set_page_config(page_title="Fraud Detection Visuals", layout="wide")

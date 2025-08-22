@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Fraud Detection Visuals", layout="wide")
 
-xgb_model = joblib.load("../models/xgb_model.pkl")
-scaler = joblib.load("../models/scaler.pkl")
-feature_names = joblib.load("../models/feature_names.pkl")
+xgb_model = joblib.load("app/xgb_model.pkl")
+scaler = joblib.load("app/scaler.pkl")
+feature_names = joblib.load("app/feature_names.pkl")
 
 @st.cache_data
 def load_data(sample_frac=0.5, random_state=42):
-    df = pd.read_csv("../data/cleaned_fraud_dataset.csv")
+    df = pd.read_csv("data/cleaned_fraud_dataset.csv")
     df = df.sample(frac=sample_frac, random_state=random_state)
     return df
 
@@ -200,11 +200,11 @@ The Feature Importance plot gives us insight to how the Machine interprets the d
 st.markdown("## ROC-AUC curve")
 rows1=st.columns(3)
 with rows1[0]:
-    st.image("../visuals/Roc(isof).png", caption="ROC curve for the Isolation forest model")
+    st.image("app/Roc_isof.png", caption="ROC curve for the Isolation forest model")
 with rows1[1]:
-    st.image("../visuals/Roc(lof).png", caption="ROC curve for the Local Outlier Factor model")
+    st.image("app/Roc_lof.png", caption="ROC curve for the Local Outlier Factor model")
 with rows1[2]:
-    st.image("../visuals/Roc(xgb).png", caption="ROC curve for the XGBoost model")
+    st.image("app/Roc_xgb.png", caption="ROC curve for the XGBoost model")
 
 col1,col2=st.columns(2)
 with col2:
