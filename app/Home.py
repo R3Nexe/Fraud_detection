@@ -8,34 +8,70 @@ import matplotlib.pyplot as plt
 xgb_model = joblib.load("../models/xgb_model.pkl")
 scaler = joblib.load("../models/scaler.pkl")
 feature_names = joblib.load("../models/feature_names.pkl")
-
+st.set_page_config(page_title="Fraud Detection Visuals", layout="wide")
 st.title("Fraud Prediction")
 col1,col2=st.columns(2)
 with col1:
     with st.container(border=True):
             distance_from_home = st.number_input("Distance from Home (KM)", min_value=0.0, value=0.0,step=20.0)
-            with st.expander(label='expand for details..'):
-                st.write("This input allows one to input the distance of transaction from the home address (Probability of fraud increases with distance)")
+            with st.expander(label='More Details'):
+                 st.write("""
+        This is the distance between the cardholder's home address and
+        the location of the transaction.
+        - Legitimate purchases usually happen closer to home.
+        - A much larger distance could indicate suspicious activity,
+          especially if the cardholder is unlikely to be at that location.
+        """)
             distance_from_last_transaction = st.number_input("Distance from Last Transaction (KM)", min_value=0.0, value=2.0,step=10.0)
-            with st.expander(label='expand for details..'):
-                st.write("This input allows one to input the distance of transaction from the last recorded transaction location (Probability of fraud increases with distance)")
+            with st.expander(label='More Details'):
+               st.write("""
+        This measures how far the current transaction is from the previous one.
+        - If the cardholder made a purchase nearby just minutes ago,
+          then another transaction hundreds of kilometers away is highly unusual.
+        - Larger distances in a short timeframe increase the chance of fraud.
+        """)
             ratio_to_median_purchase_price = st.number_input("Ratio to Median Purchase Price", min_value=1.0, value=1.0,step=1.0)
-            with st.expander(label='expand for details..'):
-                st.write("This input allows one to enter the ratio of transaction amount with that of the median transaction amount (Probability of fraud increases with increase in ratio)")
+            with st.expander(label='More Details'):
+                  st.write("""
+        This is the ratio of the transaction amount compared to the cardholder’s
+        typical (median) purchase amount.
+        - If the ratio is close to 1, it means the transaction amount is normal.
+        - If the ratio is very high, it could mean an unusually large purchase,
+          which is often associated with fraud attempts.
+        """)
 with col2:
     with st.container(border=True):
-        repeat_retailer = st.checkbox("Repeat Retailer", [0, 1])
-        with st.expander(label='expand for details..'):
-            st.write("Was the transaction made with the same retailer?")
-        used_chip = st.checkbox("Used Chip", [0, 1])
-        with st.expander(label='expand for details..'):
-            st.write("Was the transaction done with a credit card")
-        used_pin_number = st.checkbox("Used PIN Number", [0, 1])
-        with st.expander(label='expand for details..'):
-            st.write("Was the pin number entered during the transaction?")
-        online_order = st.checkbox("Online Order", [0, 1])
-        with st.expander(label='expand for details..'):
-            st.write("Was the transaction an online purchase?")
+        repeat_retailer = st.checkbox("Repeat Retailer", value=False)
+        with st.expander(label='More Details'):
+            st.write("""
+            Indicates whether the transaction is with a retailer the cardholder
+            has used before.
+            - Regular purchases from the same retailer are usually safe.
+            - Fraudulent transactions are more likely at new or unfamiliar retailers.
+            """)
+        used_chip = st.checkbox("Used Chip", value=False)
+        with st.expander(label='More Details'):
+            st.write("""
+            Indicates whether the transaction was completed using the card’s chip.
+            - Chip transactions are more secure since they use dynamic data.
+            - Fraudulent transactions are often attempted with methods that bypass
+              the chip.
+            """)
+        used_pin_number = st.checkbox("Used PIN Number", value=False)
+        with st.expander(label='More Details'):
+             st.write("""
+           Indicates whether a PIN number was entered to authorize the transaction.
+            - Transactions with PIN are generally safer because they require
+              additional authentication.
+            - Fraudsters often try to avoid PIN-based transactions.
+            """)
+        online_order = st.checkbox("Online Order", value=False)
+        with st.expander(label='More Details'):
+           st.write("""
+            Identifies if the transaction was made online.
+            - Online purchases are more vulnerable to fraud since no physical
+              card or PIN is required.
+            """)
 
 if st.button("Predict"):
     input_data = {
