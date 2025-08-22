@@ -4,10 +4,13 @@ import streamlit as st
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 # Loading Saved XGB model, Scaling Function and Feature order.
-xgb_model = joblib.load("../models/xgb_model.pkl")
-scaler = joblib.load("../models/scaler.pkl")
-feature_names = joblib.load("../models/feature_names.pkl")
+xgb_model = joblib.load("xgb_model.pkl")
+scaler = joblib.load("scaler.pkl")
+feature_names = joblib.load("feature_names.pkl")
+
+
 st.set_page_config(page_title="Fraud Detection Visuals", layout="wide")
 st.title("Fraud Prediction")
 col1,col2=st.columns(2)
