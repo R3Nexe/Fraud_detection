@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Fraud Detection Visuals", layout="wide")
 
-xgb_model = joblib.load("../models/xgb_model.pkl")
-scaler = joblib.load("../models/scaler.pkl")
-feature_names = joblib.load("../models/feature_names.pkl")
+xgb_model = joblib.load("app/xgb_model.pkl")
+scaler = joblib.load("app/scaler.pkl")
+feature_names = joblib.load("app/feature_names.pkl")
 
 @st.cache_data
 def load_data(sample_frac=0.5, random_state=42):
