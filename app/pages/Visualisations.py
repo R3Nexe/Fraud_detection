@@ -13,7 +13,7 @@ feature_names = joblib.load("app/feature_names.pkl")
 
 @st.cache_data
 def load_data(sample_frac=0.5, random_state=42):
-    df = pd.read_csv("../data/cleaned_fraud_dataset.csv")
+    df = pd.read_csv("data/cleaned_fraud_dataset.csv")
     df = df.sample(frac=sample_frac, random_state=random_state)
     return df
 
