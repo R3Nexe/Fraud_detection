@@ -64,9 +64,6 @@ The Streamlit app provides a range of visual insights:
 - **Feature Importance**  
   Visual representation of which features are most influential for the XGBoost model.
 
-- **ROC Curves**  
-  Comparison of different models across sensitivity and specificity.
-
 ---
 
 ## Streamlit Application
@@ -107,3 +104,4 @@ venv\Scripts\activate      # On Windows
 
 # Install dependencies
 pip install -r requirements.txt
+
